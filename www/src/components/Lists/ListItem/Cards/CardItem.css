@@ -1,0 +1,22 @@
+.CardTitle {
+    background-color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+    cursor: pointer;
+    max-width: 300px;
+    min-height: 20px;
+    position: relative;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.Drag {
+    border: 1px dashed;
+    cursor: move;
+}
+
+.CardTitle:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}

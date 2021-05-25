@@ -1,0 +1,41 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  background-image: linear-gradient(90deg, #006CA6, #00C6E7);
+  color: #fff;
+  background-image: url("https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x1920/3d47a0eb2267825b1b2477d97509d461/photo-1621173865362-b3fec79a0458.jpg");
+  background-position: 50% 38%;
+  background-size: cover;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+textarea {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.material-icons {
+  cursor: pointer;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+#root {
+  height: inherit;
+}

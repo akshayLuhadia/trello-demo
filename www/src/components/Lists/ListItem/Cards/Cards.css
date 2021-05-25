@@ -1,0 +1,23 @@
+.Cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+.DropCardItem {
+    background-color: #fff;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+}
+
+.Dropzone {
+    background-color: #fff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px dashed;
+    box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+    margin: 0.5rem;
+    height: 31px;
+    box-sizing: border-box;
+}

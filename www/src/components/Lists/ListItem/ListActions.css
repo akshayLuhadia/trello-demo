@@ -1,0 +1,26 @@
+.ListActions {
+    margin: 8px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.ListActions .Action {
+    display: flex;
+    align-items: flex-start;
+    padding: 6px 12px;
+    font-size: 15px;
+    color: #172b4d;
+    cursor: pointer;
+}
+
+.ListActions .Action:hover,
+.ListActions .Action:focus {
+    background: rgba(9,30,66,.04);
+    color: #091e42;
+    outline: none;
+    border: 0;
+}
+
+/* .ListActions .Action .Icon {
+    font-size: 20px;
+} */

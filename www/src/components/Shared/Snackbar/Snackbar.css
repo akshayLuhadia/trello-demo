@@ -1,0 +1,30 @@
+
+.SnackbarContainer {
+    position: fixed;
+    bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.SnackbarContainer .Snackbar {
+    padding: 8px 16px;
+    border-radius: 4px;
+    box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+    background-color: #fff;
+    color: #172b4d;
+    animation: fade-in 500ms ease;
+}
+
+@keyframes fade-in {
+    from {
+        transform-origin: center;
+        transform: scaleX(0) scaleY(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleX(1) scaleY(1);
+        opacity: 1;
+    }
+}

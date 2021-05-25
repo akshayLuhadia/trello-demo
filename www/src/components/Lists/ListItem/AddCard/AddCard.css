@@ -1,0 +1,45 @@
+.AddCardBtn {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    text-align: left;
+    margin: 0.5rem;
+    border: 0;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background-color: transparent;
+    color: #5e6c84;
+}
+
+.AddCardBtn .AddIcon {
+    font-size: 20px;
+}
+
+.AddCardForm {
+    padding: 0.5rem;
+}
+
+.AddCardTextarea {
+    background-color: #fff;
+    border-radius: 0.25rem;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+    margin-bottom: 8px;
+    text-decoration: none;
+    resize: none;
+    min-height: 4rem;
+    width: -webkit-fill-available;
+    outline: none;
+    padding: 0.5rem;
+}
+
+.AddCardBtn:hover,
+.AddCardBtn:focus{
+    outline: 0;
+    background-color: rgba(9,30,66,.08);
+    color: #172b4d;
+}
