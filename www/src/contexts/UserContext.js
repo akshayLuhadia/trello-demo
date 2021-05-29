@@ -3,8 +3,6 @@ import { execute } from "../api";
 
 export const UserContext = createContext(null);
 
-const userId = process.env.USER_ID || "60a9135da7abc80c94008004";
-
 export function UserContextProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
@@ -35,13 +33,15 @@ export function UserContextProvider({ children }) {
   };
 
   const getUser = async () => {
-    const user = await execute(`users/${userId}`, "GET");
+    const users = await execute("users");
+    const { _id } = users[0];
+    const user = await execute(`users/${_id}`, "GET");
     const { name, email, lists } = user;
     const isLoggedIn = getUserLoginStatus();
     setUser({
       name,
       email,
-      id: userId,
+      id: _id,
       lists,
       createdAt: Date.now(),
       updatedAt: Date.now(),
