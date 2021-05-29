@@ -29,6 +29,7 @@ function AddCard({ onAdd, cards }, ref) {
   const onSubmit = (e) => {
     e.preventDefault();
     onAdd({ title: cardTitle });
+    setCardTitle("");
   };
 
   const onChange = (e) => {
@@ -60,6 +61,7 @@ function AddCard({ onAdd, cards }, ref) {
           <textarea
             className="AddCardTextarea"
             onChange={onChange}
+            value={cardTitle}
             required
             autoFocus
             onKeyPress={onKeyPress}

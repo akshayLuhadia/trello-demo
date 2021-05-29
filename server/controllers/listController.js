@@ -58,6 +58,26 @@ exports.update_list = function (req, res, next) {
   });
 };
 
+exports.update_card = function (req, res, next) {
+  const { body } = req;
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: "Error",
+    });
+  }
+  const { cards } = body;
+  List.findByIdAndUpdate(
+    req.params.id,
+    { cards },
+    {},
+    function (err, updatedList) {
+      if (err) return next(err);
+      res.send(updatedList);
+    }
+  );
+};
+
 exports.create_list = function (req, res, next) {
   const { body } = req;
   if (!body) {
@@ -66,12 +86,28 @@ exports.create_list = function (req, res, next) {
       error: "Error",
     });
   }
-  const list = new List({
-    title: body.title,
-    user: body.user,
-  });
-  list.save(function (err) {
-    if (err) return next(err);
-    res.send(list);
-  });
+  List.find({})
+    .sort("-position")
+    .select("position")
+    .exec(function (err, sortedList) {
+      if (err) next(err);
+      let list = {
+        title: body.title,
+        user: body.user,
+        position: 1,
+      };
+      if (sortedList.length > 0) {
+        const { position } = sortedList[0];
+        list = {
+          ...list,
+          position: position + 1,
+        };
+      }
+
+      const listPayload = new List({ ...list });
+      listPayload.save(function (err) {
+        if (err) return next(err);
+        res.send(listPayload);
+      });
+    });
 };

@@ -1,0 +1,21 @@
+.ListItemHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
+.ListItemTitleInput {
+    margin: 0 10px 0 0;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.25rem;
+    line-height: 20px;
+    width: -webkit-fill-available;
+    box-shadow: inset 0 0 0 2px #0079bf;
+    border: 0;
+}
+
+.ListItemTitleInput:hover,
+.ListItemTitleInput:focus  {
+    outline: 0;
+}

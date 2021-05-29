@@ -7,16 +7,15 @@ import "./Lists.css";
 export default function Lists() {
   const context = useContext(ListsContext);
   const [lists] = context.listsState;
-  // const [lists, setLists] = useState([]);
 
   return (
-    <div>
-      <div className="ListContainer">
-        {lists.map((item, index) => {
+    <div className="ListContainer">
+      {lists
+        .sort((a, b) => a.position - b.position)
+        .map((item, index) => {
           return <ListItem key={index} {...item} />;
         })}
-        <CreateList />
-      </div>
+      <CreateList />
     </div>
   );
 }

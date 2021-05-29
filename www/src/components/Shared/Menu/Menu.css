@@ -10,7 +10,10 @@
     left: 28px;
     width: 300px;
     box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
+    transform-origin: top left;
     animation: fade-in 200ms ease;
+    z-index: 1;
+    border: 1px solid #d8d8d8;
 }
 
 .Menu .MenuContent .MenuContentHeader{
@@ -30,8 +33,7 @@
 @keyframes fade-in {
     from {
         opacity: 0;
-        transform-origin: top left;
-        transform: scaleX(0.1) scaleY(0.5);
+        transform: scaleX(0) scaleY(0);
     }
     to {
         opacity: 1;

@@ -3,6 +3,10 @@ import "./ListActions.css";
 
 const defaultOptions = [
   {
+    label: "Update title",
+    action: "editTitle",
+  },
+  {
     label: "Add card",
     action: "add",
   },

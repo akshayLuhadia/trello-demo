@@ -9,12 +9,6 @@
     justify-content: space-between;
 }
 
-.ListItemHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 1rem;
-}
 .ListItemHeader .ListItemHeaderText {
     margin: 0;
 }
