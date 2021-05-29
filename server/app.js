@@ -14,13 +14,13 @@ var cardsRouter = require("./routes/cards");
 var app = express();
 
 var mongoose = require("mongoose");
-const connection_string = process.env.CONNECTION_STRING_DEV;
+const connection_string = process.env.CONNECTION_STRING;
 mongoose
   .connect(connection_string, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("Connected to db."))
+  .then(() => console.log(`Connected to db. Listening on ${process.env.PORT}`))
   .catch((error) => console.log(error));
 
 // view engine setup
