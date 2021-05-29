@@ -3,7 +3,7 @@ import { execute } from "../api";
 
 export const UserContext = createContext(null);
 
-const userId = "60a9135da7abc80c94008004";
+const userId = process.env.USER_ID || "60a9135da7abc80c94008004";
 
 export function UserContextProvider({ children }) {
   const [loading, setLoading] = useState(true);
