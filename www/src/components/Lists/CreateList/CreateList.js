@@ -35,8 +35,7 @@ export default function CreateList() {
       { title: listName, user: id }
     );
     if (list) {
-      const { _id } = list;
-      setLists([...lists, { _id, title: listName, cards: [] }]);
+      setLists([...lists, { ...list, cards: [] }]);
     }
     setListName("");
   };

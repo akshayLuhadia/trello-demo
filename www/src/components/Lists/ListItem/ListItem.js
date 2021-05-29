@@ -34,7 +34,7 @@ export default function ListItem({ _id, title, cards = [], onCardDrop, onCardDra
         if (item._id === _id) {
           return {
             ...item,
-            cards: [...item.cards, e],
+            cards: [...item.cards, card],
           };
         }
         return item;
