@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { execute } from "../../../api";
 import { ListsContext } from "../../../contexts";
 import { Menu } from "../../Shared";
@@ -8,7 +8,7 @@ import { ListItemTitle } from "./ListItemTitle";
 import ListActions from "./ListActions";
 import "./ListItem.css";
 
-export default function ListItem({ _id, title, onCardItemDrop, cards = [] }) {
+export default function ListItem({ _id, title, cards = [], onCardDrop, onCardDrag }) {
   const list = {
     _id,
     title,
@@ -76,9 +76,18 @@ export default function ListItem({ _id, title, onCardItemDrop, cards = [] }) {
     <div id={_id} className="ListItem">
       <div className="ListItemHeader">
         <ListItemTitle ref={listItemTitleRef} list={list} />
-        <Menu title="List actions" ref={menuRef} content={<ListActions onClick={onActionClick} />} />
+        <Menu
+          title="List actions"
+          ref={menuRef}
+          content={<ListActions onClick={onActionClick} />}
+        />
       </div>
-      <Cards cards={cards} list={{ _id, title }} />
+      <Cards
+        cards={cards}
+        list={{ _id, title }}
+        onCardDrop={onCardDrop}
+        onCardDrag={onCardDrag}
+      />
       <AddCard ref={addCardRef} onAdd={onAddCard} cards={cards} />
     </div>
   );

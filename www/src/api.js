@@ -1,6 +1,6 @@
 exports.execute = async function (resource, method, headers = {}, body = null) {
   try {
-    const res = await fetch(`http://localhost:3000/${resource}`, {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${resource}`, {
       method,
       headers: {
         "Content-Type": "application/json",

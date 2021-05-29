@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { execute } from "../../../../api";
 import { ListsContext } from "../../../../contexts";
 import CardItem from "./CardItem";
@@ -41,40 +41,129 @@ const updateListsState = (
   return temp;
 };
 
-export default function Cards({ cards, list }) {
+export default function Cards({ cards, list, onCardDrop, onCardDrag }) {
   const context = useContext(ListsContext);
   const [lists, setLists] = context.listsState;
+
+  const [draggedCardData, setDraggedCardData] = useState(null);
 
   const cardRef = useRef(null);
 
   const onDragOver = (e) => {
     e.preventDefault();
+    // cardRef.current.classList.add("Dropzone");
   };
 
-  const handleOnDrop = async (e) => {
-    e.preventDefault();
-    const data = e.dataTransfer.getData("text/plain");
-    if (data) {
-      const parsedData = JSON.parse(data);
+  const onCardItemDrag = (e, { card, list }) => {
+    setDraggedCardData({ card, list });
+    onCardDrag({ card, list });
+  };
 
-      const { _id: currentListId } = list;
-      const { _id: parsedListId } = parsedData.list;
-      const { _id: parsedCardId } = parsedData.card;
-
-      if (currentListId !== parsedListId) {
-        const res = await updateCard(currentListId, parsedData.card);
-        if (res) {
-          const updateLists = updateListsState(
-            lists,
-            parsedListId,
-            parsedCardId,
-            currentListId,
-            cards,
-            parsedData.card
-          );
-          setLists(updateLists);
-        }
+  const updateCardPosition = (
+    draggedCardId,
+    droppedCardId,
+    droppedCardPosition,
+    draggedCardPosition
+  ) => {
+    return cards.map((card) => {
+      if (card._id === draggedCardId) {
+        return {
+          ...card,
+          position: droppedCardPosition,
+        };
       }
+      if (card._id === droppedCardId) {
+        return {
+          ...card,
+          position: draggedCardPosition,
+        };
+      }
+      return { ...card };
+    });
+  };
+
+  const onCardItemDrop = async (e, { card: droppedCard }) => {
+    if (draggedCardData) {
+      const { _id: draggedListId } = draggedCardData.list;
+      const { _id: currentListId } = list;
+      if (draggedListId === currentListId) {
+        const { _id: draggedCardId, position: draggedCardPosition } =
+          draggedCardData.card;
+        const { _id: droppedCardId, position: droppedCardPosition } =
+          droppedCard;
+
+        const updateDraggedCard = await execute(
+          `cards/${draggedCardId}/update`,
+          "POST",
+          {},
+          { ...draggedCardData.card, position: droppedCardPosition }
+        );
+        const updateDroppedCard = await execute(
+          `cards/${droppedCardId}/update`,
+          "POST",
+          {},
+          { ...droppedCard, position: draggedCardPosition }
+        );
+        const res = await await Promise.all([
+          updateDraggedCard,
+          updateDroppedCard,
+        ]);
+        console.log(res);
+
+        const updatedLists = lists.map((listItem) => {
+          if (listItem._id === currentListId) {
+            return {
+              ...listItem,
+              cards: updateCardPosition(
+                draggedCardId,
+                droppedCardId,
+                droppedCardPosition,
+                draggedCardPosition
+              ),
+            };
+          }
+          return { ...listItem };
+        });
+        setLists(updatedLists);
+      }
+    }
+  };
+
+  const handleOnDrop = () => {
+    // const { _id: currentListId } = list;
+    // const { _id: draggedListId } = draggedCardData.list;
+    // const { _id: draggedCardId } = draggedCardData.card;
+    // if (currentListId !== draggedListId) {
+    //   const updatedLists = lists.map((listItem) => {
+    //     if (listItem._id === draggedListId) {
+    //       return {
+    //         ...listItem,
+    //         cards: cards.filter((card) => card._id !== draggedCardId),
+    //       };
+    //     }
+    //     if (listItem._id === currentListId) {
+    //       const updatedCards = listItem.cards.push({ ...draggedCardData.card });
+    //       return {
+    //         ...listItem,
+    //         cards: updatedCards,
+    //       };
+    //     }
+    //     return {
+    //       ...listItem,
+    //     };
+    //   });
+    // }
+  };
+
+  const onDrop = (e) => {
+    if (draggedCardData) {
+      if (list._id === draggedCardData.list._id) {
+        onCardDrop(e, { cards, list }, { takeAction: false });
+      } else {
+        onCardDrop(e, { cards, list }, { takeAction: true });
+      }
+    } else {
+      onCardDrop(e, { cards, list }, { takeAction: true });
     }
   };
 
@@ -84,10 +173,18 @@ export default function Cards({ cards, list }) {
       className="Cards"
       ref={cardRef}
       onDragOver={onDragOver}
-      onDrop={handleOnDrop}
+      onDrop={onDrop}
     >
       {cards.map((item, index) => {
-        return <CardItem key={index} card={item} list={list} />;
+        return (
+          <CardItem
+            key={index}
+            card={item}
+            list={list}
+            onCardDrop={onCardItemDrop}
+            onCardDrag={onCardItemDrag}
+          />
+        );
       })}
     </div>
   );

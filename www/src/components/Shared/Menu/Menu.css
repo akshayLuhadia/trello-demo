@@ -33,7 +33,7 @@
 @keyframes fade-in {
     from {
         opacity: 0;
-        transform: scaleX(0) scaleY(0);
+        transform: scaleX(0.5) scaleY(0.5);
     }
     to {
         opacity: 1;

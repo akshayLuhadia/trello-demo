@@ -4,7 +4,7 @@ import { execute } from "../../../../api";
 import "./CardItem.css";
 import { ListsContext } from "../../../../contexts";
 
-export default function CardItem({ card, list }) {
+export default function CardItem({ card, list, onCardDrag, onCardDrop }) {
   const { _id, title } = card;
   const context = useContext(ListsContext);
   const [lists, setLists] = context.listsState;
@@ -12,13 +12,12 @@ export default function CardItem({ card, list }) {
   const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
   const onDragStart = (e) => {
-    e.currentTarget.classList.add("Drag");
-    e.effectAllowed = "move";
-    e.dataTransfer.setDragImage(e.currentTarget, 25, 25);
-    e.dataTransfer.setData("text/plain", JSON.stringify({ card, list }));
+    e.currentTarget.style.opacity = "0.4";
+    onCardDrag(e, { card, list });
   };
 
   const onDragEnd = (e) => {
+    e.currentTarget.style.opacity = "1";
     e.currentTarget.classList.remove("Drag");
     e.dataTransfer.clearData();
   };
@@ -40,15 +39,33 @@ export default function CardItem({ card, list }) {
     }
   };
 
+  const onDragOver = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.add("Drag");
+  };
+
+  const onDragLeave = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove("Drag");
+  };
+
+  const onDrop = (e) => {
+    e.preventDefault();
+    e.currentTarget.classList.remove("Drag");
+    onCardDrop(e, { card, list });
+  };
+
   return (
     <div
-      id={_id}
-      className="CardItem"
-      draggable={true}
+      draggable="true"
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+      onDrop={onDrop}
       onMouseEnter={() => setShowDeleteIcon(true)}
       onMouseLeave={() => setShowDeleteIcon(false)}
+      className="CardItem"
     >
       <div>{title}</div>
       {showDeleteIcon && (

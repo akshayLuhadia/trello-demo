@@ -41,14 +41,33 @@ exports.update_card = function (req, res, next) {
 
 exports.create_card = function (req, res, next) {
   const { body } = req;
-  if (body) {
-    const card = new Card({
-      title: body.title,
-      list: body.list,
-    });
-    card.save(function (err) {
-      if (err) return next(err);
-      res.send(card);
+  if (!body) {
+    return res.status(400).json({
+      success: false,
+      error: "Error",
     });
   }
+  Card.find({ list: body.list })
+    .sort("-position")
+    .select("position")
+    .exec(function (err, sortedCards) {
+      if (err) next(err);
+      let card = {
+        title: body.title,
+        list: body.list,
+        position: 1,
+      };
+      if (sortedCards.length > 0) {
+        const { position } = sortedCards[0];
+        card = {
+          ...card,
+          position: position + 1,
+        };
+      }
+      const cardPayload = new Card({ ...card });
+      cardPayload.save(function (err) {
+        if (err) return next(err);
+        res.send(cardPayload);
+      });
+    });
 };

@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { ListsContextProvider, UserContextProvider } from "./contexts";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Pages } from "./components/Pages";
+require("dotenv").config();
 
 function App() {
   return (
