@@ -1,29 +1,35 @@
 import React, { useContext, useState } from "react";
 import { Icon } from "../../../Shared";
 import { execute } from "../../../../api";
+import { DragContext, ListsContext } from "../../../../contexts";
 import "./CardItem.css";
-import { ListsContext } from "../../../../contexts";
 
-export default function CardItem({ card, list, onCardDrag, onCardDrop }) {
+export default function CardItem({ card, list, onCardDrop }) {
   const { _id, title } = card;
-  const context = useContext(ListsContext);
-  const [lists, setLists] = context.listsState;
+  const listsContext = useContext(ListsContext);
+  const [lists, setLists] = listsContext.listsState;
+
+  const dragContext = useContext(DragContext);
+  const [draggedElementState, droppedOnElementState] = dragContext;
+
+  const [, setDraggedElement] = draggedElementState;
+  const [, setDroppedOnElement] = droppedOnElementState;
 
   const [showDeleteIcon, setShowDeleteIcon] = useState(false);
 
   const onDragStart = (e) => {
     e.currentTarget.style.opacity = "0.4";
-    onCardDrag(e, { card, list });
+    setDraggedElement({ card, list });
   };
 
-  const onDragEnd = (e) => {
+  const handleOnDragEnd = (e) => {
     e.currentTarget.style.opacity = "1";
     e.currentTarget.classList.remove("Drag");
     e.dataTransfer.clearData();
   };
 
-  const onDeleteClick = () => {
-    const res = execute(`cards/${_id}/delete`, "POST", {}, { id: _id });
+  const onDeleteClick = async () => {
+    const res = await execute(`cards/${_id}/delete`, "POST", {}, { id: _id });
     if (res) {
       const { _id: listId } = list;
       const updatedList = lists.map((list) => {
@@ -52,14 +58,15 @@ export default function CardItem({ card, list, onCardDrag, onCardDrop }) {
   const onDrop = (e) => {
     e.preventDefault();
     e.currentTarget.classList.remove("Drag");
-    onCardDrop(e, { card, list });
+    setDroppedOnElement({ card, list });
+    onCardDrop({ card, list });
   };
 
   return (
     <div
       draggable="true"
       onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
+      onDragEnd={handleOnDragEnd}
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
       onDrop={onDrop}
