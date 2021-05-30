@@ -4,12 +4,12 @@ import "./Header.css";
 
 export default function Header() {
   const context = useContext(UserContext);
-  const [user, ,,logoutUser] = context;
+  const [user, , , logoutUser, appLoading] = context;
 
   return (
     <header className="Header">
       <section className="LeftSection">Trello boards demo</section>
-      {user?.isLoggedIn && (
+      {user?.isLoggedIn && !appLoading && (
         <section className="RightSection">
           <button className="Logout" onClick={logoutUser}>
             Logout

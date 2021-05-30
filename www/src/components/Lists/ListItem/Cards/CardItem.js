@@ -7,7 +7,7 @@ import "./CardItem.css";
 export default function CardItem({ card, list, onCardDrop }) {
   const { _id, title } = card;
   const listsContext = useContext(ListsContext);
-  const [lists, setLists] = listsContext.listsState;
+  const [lists, setLists] = listsContext;
 
   const dragContext = useContext(DragContext);
   const [draggedElementState, droppedOnElementState] = dragContext;

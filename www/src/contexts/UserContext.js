@@ -5,7 +5,11 @@ export const UserContext = createContext(null);
 
 export function UserContextProvider({ children }) {
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    name: "",
+    email: "",
+    lists: [],
+  });
 
   const loginUser = () => {
     localStorage.setItem("isLoggedIn", JSON.stringify(true));
@@ -55,8 +59,10 @@ export function UserContextProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={[user, setUser, loginUser, logoutUser]}>
-      {!loading && children}
+    <UserContext.Provider
+      value={[user, setUser, loginUser, logoutUser, loading]}
+    >
+      {children}
     </UserContext.Provider>
   );
 }

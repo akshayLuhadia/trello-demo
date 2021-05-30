@@ -6,10 +6,11 @@ import "./CreateList.css";
 import { execute } from "../../../api";
 
 export default function CreateList() {
-  const listContext = useContext(ListsContext);
   const userContext = useContext(UserContext);
-  const [lists, setLists] = listContext.listsState;
   const [user] = userContext;
+
+  const listsContext = useContext(ListsContext);
+  const [lists, setLists] = listsContext;
 
   const [showInput, setShowInput] = useState(false);
   const [listName, setListName] = useState("");

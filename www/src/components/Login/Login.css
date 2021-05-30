@@ -6,6 +6,10 @@
     margin-top: -64px;
 }
 
+.AppLoading {
+    text-align: center;
+}
+
 .LoginInfo {
     background-color: #fff;
     box-shadow: 0 1px 0 rgb(9 30 66 / 25%);
@@ -44,6 +48,11 @@
     border-color: #2ea043;
     color: #fff;
     cursor: pointer;
+}
+
+.LoginBtn:disabled {
+    pointer-events: none;
+    background-color: rgba(35, 134, 55, 0.5);
 }
 
 .LoginBtn:hover,

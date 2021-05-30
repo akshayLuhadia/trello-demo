@@ -6,8 +6,8 @@ export const ListsContext = createContext(null);
 
 export function ListsContextProvider({ children }) {
   const userContext = useContext(UserContext);
-  const [user] = userContext;
-  const { lists: userLists } = user;
+  const [user, , , , appLoading] = userContext;
+  const { lists: userLists = [] } = user || { lists: [] };
   const [lists, setLists] = useState(userLists);
 
   const getCardsForListItem = async (listId) => {
@@ -29,13 +29,9 @@ export function ListsContextProvider({ children }) {
 
   useEffect(() => {
     getCardsForLists();
-  }, []);
-
-  const context = {
-    listsState: [lists, setLists],
-  };
+  }, [appLoading]);
 
   return (
-    <ListsContext.Provider value={context}>{children}</ListsContext.Provider>
+    <ListsContext.Provider value={[lists, setLists]}>{children}</ListsContext.Provider>
   );
 }

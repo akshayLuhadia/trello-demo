@@ -14,8 +14,8 @@ export default function ListItem({ _id, title, cards = [], onCardDrop, onCardDra
     title,
     cards,
   };
-  const context = useContext(ListsContext);
-  const [lists, setLists] = context.listsState;
+  const listsContext = useContext(ListsContext);
+  const [lists, setLists] = listsContext;
 
   const menuRef = useRef(null);
   const addCardRef = useRef(null);

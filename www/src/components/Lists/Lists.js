@@ -87,8 +87,8 @@ const handleDifferentListCardDrop = (
 };
 
 export default function Lists() {
-  const context = useContext(ListsContext);
-  const [lists, setLists] = context.listsState;
+  const listsContext = useContext(ListsContext);
+  const [lists, setLists] = listsContext;
 
   const dragContext = useContext(DragContext);
   const [draggedElementState] = dragContext;

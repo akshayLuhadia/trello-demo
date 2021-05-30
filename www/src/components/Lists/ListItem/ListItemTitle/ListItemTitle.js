@@ -6,8 +6,8 @@ import "./ListItemTitle.css";
 function ListItemTitle({ list }, ref) {
   const { title, _id } = list;
 
-  const context = useContext(ListsContext);
-  const [lists, setLists] = context.listsState;
+  const listsContext = useContext(ListsContext);
+  const [lists, setLists] = listsContext;
 
   const [showInput, setShowInput] = useState(false);
   const [value, setValue] = useState(title);
